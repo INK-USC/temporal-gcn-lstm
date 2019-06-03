@@ -9,8 +9,10 @@ build_temporal.py:  build temporal graphs per day
 
 ### Models
 
-baseline model <br></br>
+baseline model:
+
 activity_seq_model.py
 
-Multi-channel-temporal-gcn-lstm <br></br>
+Multi-channel-temporal-gcn-lstm:
+
 python3 multi_channel.py
