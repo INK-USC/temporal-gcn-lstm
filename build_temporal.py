@@ -7,8 +7,19 @@ import numpy as np
 Input format
 
 'id,action,time'
+...
+ 
+ex. 'User1,send-snap,2018-06-28T01:00:00.000000000+0100'
 
-ex. 'User1,Send-Snap,2018-06-28T01:00:00.000000000+0100'
+Output format
+
+'id # sessions
+ action1,action2,probability
+...
+'
+
+ex 'Send-Snap,Receive-Snap,0.5'
+
 """
 
 SESSION_INPUT = sys.argv[1]

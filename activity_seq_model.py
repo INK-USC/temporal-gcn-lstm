@@ -7,16 +7,16 @@ from sklearn.metrics import f1_score
 from torch.autograd import Variable
 from tqdm import tqdm
 
-"""baseline activity sequence model"""
+"""Baseline activity sequence model"""
 
 
 class LSTMs(nn.Module):
-    def __init__(self, input_dim, hidden_dim, layers, dropout=0):
+    def __init__(self, input_dim, hidden_dim, out_dim, layers, dropout=0):
         super().__init__()
 
         self.lstm = nn.LSTM(input_size=input_dim, hidden_size=hidden_dim, num_layers=layers, dropout=dropout,
                             batch_first=True)
-        self.linear = nn.Linear(hidden_dim, 3)
+        self.linear = nn.Linear(hidden_dim, out_dim)
 
         self.softmax = nn.LogSoftmax(dim=1)
 
@@ -76,7 +76,7 @@ class Predictor(object):
         self.y_test = data.y_test
 
     def train(self):
-        self.model = LSTMs(self.params['input_dim'], self.params['hidden_dim'], self.params['layers'],
+        self.model = LSTMs(self.params['input_dim'], self.params['hidden_dim'], self.params['out_dim'], self.params['layers'],
                            self.params['dropout'])
         self.criterion = nn.CrossEntropyLoss()
         # self.criterion = nn.NLLLoss()
@@ -125,9 +125,10 @@ class Predictor(object):
 
 
 if __name__ == '__main__':
-    """input df as pandas dataframe of sequence data"""
+    """Input df as pandas dataframe of sequence data"""
     df = pd.DataFrame()
     X, Y = create_data(14, df)
-    params = {'input_dim': 10, 'hidden_dim': 16, 'layers': 2, 'dropout': 0.5, 'learning_rate': 0.01, 'n_epoch': 150}
+    params = {'input_dim': 10, 'hidden_dim': 16, 'out_dim': 3, 'layers': 2,
+              'dropout': 0.5, 'learning_rate': 0.01, 'n_epoch': 150}
     predictor = Predictor(params, Data(X, Y, 0.8))
     t1, t2 = predictor.train()
