@@ -51,7 +51,8 @@ def create_data(seq_length, df):
     a = []
 
     """ fill in custom actions """
-    actions = []
+    # actions = []
+    actions = ['action1', 'action2', 'action3']
 
     for user in df[actions].values:
         d = []
@@ -63,7 +64,7 @@ def create_data(seq_length, df):
         a.append(np.array(d).T)
 
     X = np.array(a)
-    Y = df['label'].values + 1
+    Y = df['label'].values.astype(int) + 1
     return X, Y
 
 

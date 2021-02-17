@@ -31,19 +31,19 @@ import pickle
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--gcn_in', type=int, default=12)
+    parser.add_argument('--gcn_in', type=int, default=2) # 12 in paper
     parser.add_argument('--gcn_hid', type=int, default=20)
     parser.add_argument('--gcn_out', type=int, default=20)
     parser.add_argument('--lstm_hid', type=int, default=32)
     parser.add_argument('--lstm_layers', type=int, default=2)
     parser.add_argument('--lstm_drop', type=int, default=0)
-    parser.add_argument('--a_in', type=int, default=10)
+    parser.add_argument('--a_in', type=int, default=3) # 10 in paper
     parser.add_argument('--macro_dim', type=int, default=4)
     parser.add_argument('--num_classes', type=int, default=3)
-    parser.add_argument('--epoch', type=int, default=1000)
+    parser.add_argument('--epoch', type=int, default=100) # can increase
     parser.add_argument('--drop', type=float, default=0.5)
     parser.add_argument('--lr', type=float, default=0.01)
-    parser.add_argument('--period', type=int, default=14)  # 14 days
+    parser.add_argument('--period', type=int, default=7)  # 14 days in paper
 
     parser.add_argument('--activity', type=bool, default=True)
     parser.add_argument('--macro', type=bool, default=True)
@@ -55,10 +55,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # load data
-    df = pd.read_pickle(args.df)
+    df = pd.read_pickle(args.df_path)
     if args.macro:
-        macro = pd.read_pickle(args.macro)
-    graphs_sep = pickle.load(args.graphs_path)  # {id: list of networkx graphs}
+        macro = pd.read_pickle(args.macro_path).to_numpy()
+    graphs_sep = pickle.load(open(args.graphs_path, 'rb'))  # {id: list of networkx graphs}
 
     # create graph input
     dgls, inputs, xav, eye, dim = [], [], [], [], 20
@@ -82,9 +82,9 @@ if __name__ == '__main__':
     np.random.shuffle(index)
     train_index, test_index = index[:split], index[split:]
 
-    # prep labels
-    train_labels, test_labels = Variable(torch.LongTensor((df['label'].values + 1)[train_index])), Variable(
-        torch.LongTensor((df['label'].values + 1)[test_index]))
+    # prep labels - +1 here bc original is [-1, 0, 1]
+    train_labels, test_labels = Variable(torch.LongTensor((df['label'].values.astype(int) + 1)[train_index])), Variable(
+        torch.LongTensor((df['label'].values.astype(int) + 1)[test_index]))
 
     # prep temporal graph data
     k = args.period
