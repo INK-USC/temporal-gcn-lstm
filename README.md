@@ -47,20 +47,11 @@ Hyperparameters were set to optimal for our dataset, they can be modified as inp
 ## Cite
 
 ```
-@inproceedings{10.1145/3292500.3330750,
-    author = {Liu, Yozen and Shi, Xiaolin and Pierce, Lucas and Ren, Xiang},
-    title = {Characterizing and Forecasting User Engagement with In-App Action Graph: A Case Study of Snapchat},
-    year = {2019},
-    isbn = {9781450362016},
-    publisher = {Association for Computing Machinery},
-    address = {New York, NY, USA},
-    url = {https://doi.org/10.1145/3292500.3330750},
-    doi = {10.1145/3292500.3330750},
-    booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining},
-    pages = {2023–2031},
-    numpages = {9},
-    keywords = {action graph, time-series model, user engagement prediction, app usage pattern, graph neural network},
-    location = {Anchorage, AK, USA},
-    series = {KDD '19}
+@inproceedings{liu2019characterizing,
+  title={Characterizing and forecasting user engagement with in-app action graph: A case study of snapchat},
+  author={Liu, Yozen and Shi, Xiaolin and Pierce, Lucas and Ren, Xiang},
+  booktitle={Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  pages={2023--2031},
+  year={2019}
 }
 ```
